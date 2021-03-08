@@ -1,0 +1,57 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  # ==========================================================================
+  # Base Box
+  # SCC Systems -> Replace with SCC Ubuntu Base
+  
+  config.vm.box = "hashicorp/bionic64"
+  config.vm.box_url = "https://vagrantcloud.com/hashicorp/bionic64"
+
+  # ==========================================================================
+  # Port Mapping
+
+  ## controller rest api access from host
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  ## ssh access via localhost:2222
+  config.vm.network "forwarded_port", guest:22, host:2222
+
+  # ==========================================================================
+  # Synced Folders
+  # SCC Systems -> Map H-Drive to /home/${USER}/h-drive
+
+  config.vm.synced_folder "./synced/", "/home/vagrant/synced"
+
+  # ==========================================================================
+  # Options
+
+  config.ssh.keep_alive = true
+  config.ssh.forward_agent = true
+  config.ssh.forward_x11 = true
+  config.ssh.keys_only = false
+  config.ssh.insert_key = false
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+
+  # ==========================================================================
+  # Configure VirtualBox Settings
+
+  config.vm.provider 'virtualbox' do |vb|
+    vb.memory = "4096"
+    vb.gui = false
+    vb.cpus = 4
+    vb.name = "scc365"
+
+    vb.customize [
+      "setextradata", "global", "GUI/SuppressMessages", "all"
+    ]
+  end
+
+  # ==========================================================================
+  # Provision the VM
+
+  config.vm.provision :shell, path: "provision.sh"
+
+end
