@@ -10,7 +10,7 @@ You can access MyLab [here](https://mylab.lancs.ac.uk).
 
 ---
 
-## Vagrant
+## Vagrant [personal device]
 
 > Only the MyLab VM uses comes with a GUI
 
@@ -19,6 +19,8 @@ You can run this VM on a personal device if you so choose using just the files f
 Required Software:
  - Vagrant
  - VirtualBox (6+)
+ - Vagrant Manager (if you're on MacOS)
+ - Xming/Xquartz
 
 To create the VM, simply clone this repository, and from a terminal window in the same directory as the vagrantfile run:
 
@@ -28,7 +30,21 @@ $ vagrant up
 
 The VM will then download/provision. To login via ssh, the username is `vagrant` and the password is `vagrant`.
 
+```bash
+vagrant ssh
+```
+or
+```bash
+ssh localhost -p 2222 -l vagrant -X
+```
+
 When using vagrant this way, you **require** a folder called `synced` in the same directory as the vagrantfile. However, you can modify the shared directories from within the vagrantfile to whatever suits you 👍
+
+---
+
+## Vagrant [lab machine]
+
+Ummm, nope, not this year...🦠
 
 ---
 
@@ -36,5 +52,5 @@ When using vagrant this way, you **require** a folder called `synced` in the sam
 
 Any issues with the VM? [email me](mailto:w.fantom@lancs.ac.uk) 
 
-Any issues with the MyLab/Horizon system? [email adrian from scc-systems](mailto:a.tucker@lancaster.ac.uk)
 
+> As a last resort for any issues with the MyLab/Horizon system? [email adrian from scc-systems](mailto:a.tucker@lancaster.ac.uk)
