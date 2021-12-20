@@ -5,10 +5,8 @@ Vagrant.configure(2) do |config|
 
   # ==========================================================================
   # Base Box
-  # SCC Systems -> Replace with SCC Ubuntu Base
   
-  config.vm.box = "hashicorp/bionic64"
-  config.vm.box_url = "https://vagrantcloud.com/hashicorp/bionic64"
+  config.vm.box = "bento/ubuntu-20.04"
 
   # ==========================================================================
   # Port Mapping
