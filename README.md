@@ -12,6 +12,12 @@ Otherwise, this VM can easily be created using Virtual Box and Vagrant. Simply n
 vagrant up
 ```
 
+---
+
+ - **Username**: `vagrant`
+ - **Password**: `vagrant`
+---
+
 ## Updating the VM
 
 If you are currently participating in SCC365 @ Lancaster University, you can force the VM to update minor changes using the command "`updater`" as the `vagrant` user in the VM.
