@@ -1,7 +1,1 @@
-**
-!.gitignore
-!.github
-!.git
-!provision.sh
-!README.md
-!vagrantfile
+.vagrant
