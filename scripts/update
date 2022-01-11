@@ -1,0 +1,77 @@
+#!/bin/bash
+
+## Docker Images
+MININET_DOCKER_IMAGE="ghcr.io/scc365/mininet:latest"
+MN_DOCKER_IMAGE="ghcr.io/scc365/mn:latest"
+PTCP_DOCKER_IMAGE="ghcr.io/scc365/ptcp:latest"
+RYU_DOCKER_IMAGE="ghcr.io/scc365/ryu:latest"
+ME_DOCKER_IMAGE="ghcr.io/scc365/me:latest"
+
+## Tutorial Repositories
+MININET_TUTORIAL_REPO="https://github.com/scc365/mininet-tutorial"
+MININET_TUTORIAL_DIR="/home/${USER}/mininet-tutorial"
+TESTING_TUTORIAL_REPO="https://github.com/scc365/testing-tutorial"
+TESTING_TUTORIAL_DIR="/home/${USER}/testing-tutorial"
+RYU_TUTORIAL_REPO="https://github.com/scc365/ryu-tutorial"
+RYU_TUTORIAL_DIR="/home/${USER}/ryu-tutorial"
+
+function becho() {
+  echo -e '\033[1m'$1'\033[0m'
+}
+
+function error() {
+  echo "Error: "$1
+  becho "Exiting..."; exit 1
+}
+
+function pull_docker_image() {
+  docker pull $1 > /dev/null 2>&1
+  [ $? -eq 0 ] && echo -e "\rImage '"$1"' up-to-date ✅" || error "Failed to update image '"$1"' 🆘"
+}
+
+function update_tutorial_respoitory() {
+  original=$(pwd)
+  if [[ ! -d "$1" ]]
+  then
+    git clone $2 $1 || error "Failed to update tutorial repository '"$1"' 🆘"
+  fi
+  cd $1
+  if [[ `git status --porcelain --untracked-files=no` ]]; then
+    git pull
+    [ $? -eq 0 ] && echo "\rRepository '"$1"' up-to-date ✅" || error "Failed to update tutorial repository '"$1"' 🆘"
+  else
+    echo "Files have been modified by you in this local copy ⚠️"
+  fi
+  cd $original
+}
+
+case "$1" in
+  docker)
+    # update docker images
+    becho "Updating Docker Images 🐳"
+    pull_docker_image $MININET_DOCKER_IMAGE
+    pull_docker_image $MN_DOCKER_IMAGE
+    pull_docker_image $PTCP_DOCKER_IMAGE
+    pull_docker_image $RYU_DOCKER_IMAGE
+    pull_docker_image $ME_DOCKER_IMAGE
+    ;;
+  tutorials)
+    # pull latest tutorials
+    becho "Updating Template Repoitories 📁"
+    update_tutorial_respoitory $MININET_TUTORIAL_DIR $MININET_TUTORIAL_REPO
+    update_tutorial_respoitory $TESTING_TUTORIAL_DIR $TESTING_TUTORIAL_REPO
+    update_tutorial_respoitory $RYU_TUTORIAL_DIR $RYU_TUTORIAL_REPO
+    ;;
+  *)
+    # else
+    becho "Advanced Networking Updater"
+    echo -e "| If course materials (such as tutorials or docker images) are updated \
+    \n| faster than new images can be published, then this lets you force \
+    \n| updates without pulling a new vagrant image.\n"
+    echo -e "note: only minor updates will be distributed this way\n"
+    becho "Syntax: updater <option>"
+    becho "Options:"
+    echo "docker         pulls all the latest course provided docker images"
+    echo "tutorials      pulls the latest versions of the tutorial repositories"
+    ;;
+esac

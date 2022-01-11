@@ -2,7 +2,7 @@
 set -e
 
 MININET_REPO="https://github.com/mininet/mininet"
-MININET_BRANCH="master"
+MININET_BRANCH="2.3.0"
 RYU_VERSION="4.34"
 MININET_IMAGE="ghcr.io/scc365/mininet:latest"
 MN_IMAGE="ghcr.io/scc365/mn:latest"
@@ -55,6 +55,7 @@ function install_docker() {
     $(lsb_release -cs) stable"
     apt-get update
     apt-get install -y docker-ce docker-ce-cli containerd.io
+    usermod -aG docker vagrant
 }
 
 function pull_images() {
@@ -67,11 +68,12 @@ function pull_images() {
 
 function install_mininet() {
     cd /root
+    rm -rf ./mininet ./openflow
     git clone $MININET_REPO -b $MININET_BRANCH ./mininet
     cd mininet
     #FIX: use `https://` rather than `git://` to work with scc builds
-    sed -i 's/git:/https:/g' ./utils/install.sh
-    sh -c "./util/install.sh -fnv"
+    sed -i 's/git:/https:/g' ./util/install.sh
+    PYTHON=python3 sh -c "./util/install.sh -fnv"
 }
 
 function install_ryu() {
@@ -82,21 +84,28 @@ function install_ryu() {
     pip install -r ./requirements.txt
 }
 
+function install_updater() {
+    chmod +x /home/vagrant/.scripts/updater
+    echo "export PATH=${PATH}:/home/vagrant/.scripts/" >> /home/vagrant/.bashrc
+}
+
 function add_tutorials() {
-    cd ~
+    cd /home/vagrant
     git clone $MININET_TUTORIAL
     git clone $TESTING_TUTORIAL
     git clone $RYU_TUTORIAL
 }
 
 function set_bashrc_message() {
-    echo "echo ||>  SCC365 - Advanced Networking  <||" >> ~/.bashrc
+    touch /home/vagrant/.hushlogin
+    echo "echo \"||>  Advanced Networking VM  <||\"" >> /home/vagrant/.bashrc
 }
 
 install_deps
+set_bashrc_message
 install_docker
 pull_images
 install_mininet
 install_ryu
+install_updater
 add_tutorials
-set_bashrc_message
