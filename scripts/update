@@ -5,14 +5,15 @@ MININET_DOCKER_IMAGE="ghcr.io/scc365/mininet:latest"
 MN_DOCKER_IMAGE="ghcr.io/scc365/mn:latest"
 PTCP_DOCKER_IMAGE="ghcr.io/scc365/ptcp:latest"
 RYU_DOCKER_IMAGE="ghcr.io/scc365/ryu:latest"
+TSHARK_DOCKER_IMAGE="ghcr.io/scc365/tshark:latest"
 ME_DOCKER_IMAGE="ghcr.io/scc365/me:latest"
 
 ## Tutorial Repositories
-MININET_TUTORIAL_REPO="https://github.com/scc365/mininet-tutorial"
+MININET_TUTORIAL_REPO="https://github.com/scc365/tutorial-mininet"
 MININET_TUTORIAL_DIR="/home/${USER}/mininet-tutorial"
-TESTING_TUTORIAL_REPO="https://github.com/scc365/testing-tutorial"
-TESTING_TUTORIAL_DIR="/home/${USER}/testing-tutorial"
-RYU_TUTORIAL_REPO="https://github.com/scc365/ryu-tutorial"
+TESTING_TUTORIAL_REPO="https://github.com/scc365/guide-network-testing"
+TESTING_TUTORIAL_DIR="/home/${USER}/testing-guide"
+RYU_TUTORIAL_REPO="https://github.com/scc365/tutorial-ryu"
 RYU_TUTORIAL_DIR="/home/${USER}/ryu-tutorial"
 
 function becho() {
@@ -54,6 +55,7 @@ case "$1" in
     pull_docker_image $PTCP_DOCKER_IMAGE
     pull_docker_image $RYU_DOCKER_IMAGE
     pull_docker_image $ME_DOCKER_IMAGE
+    pull_docker_image $TSHARK_DOCKER_IMAGE
     ;;
   tutorials)
     # pull latest tutorials

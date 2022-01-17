@@ -10,9 +10,9 @@ PTCP_IMAGE="ghcr.io/scc365/ptcp:latest"
 RYU_IMAGE="ghcr.io/scc365/ryu:latest"
 ME_IMAGE="ghcr.io/scc365/me:latest"
 
-MININET_TUTORIAL="https://github.com/scc365/mininet-tutorial"
-TESTING_TUTORIAL="https://github.com/scc365/testing-tutorial"
-RYU_TUTORIAL="https://github.com/scc365/ryu-tutorial"
+MININET_TUTORIAL="https://github.com/scc365/tutorial-mininet"
+TESTING_TUTORIAL="https://github.com/scc365/guide-network-testing"
+RYU_TUTORIAL="https://github.com/scc365/tutorial-ryu"
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
