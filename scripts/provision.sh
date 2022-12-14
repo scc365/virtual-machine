@@ -2,7 +2,7 @@
 set -e
 
 MININET_REPO="https://github.com/mininet/mininet"
-MININET_BRANCH="2.3.0"
+MININET_BRANCH="2.3.1"
 RYU_VERSION="4.34"
 MININET_IMAGE="ghcr.io/scc365/mininet:latest"
 MN_IMAGE="ghcr.io/scc365/mn:latest"
