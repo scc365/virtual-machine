@@ -1,29 +1,42 @@
 # Virtual Machine
 
-The easiest way to get started with the advanced networking materials is though the use of this provided VM. It contains all the software you will need to complete the tutorial series and any coursework activities.
+This repository contains the files needed to build a virtual machine suitable for the SCC365 tutorial and coursework tasks.
+
+---
+
+## Lancaster University Students 🎓
+
+As a Lancaster University student, you should use the pre-built VM hosted on the MyLab system that can be found [here](https://mylab.lancs.ac.uk). You may use it in the web browser or the VMWare Horizon client application, but expect a better user experience with the client application. You should use your university credentials to login to the VM and you will have access to your shared storage.
+
+This pre-built VM contains all the software required to complete the tasks and some user-friendly applications such as VS Code, so you can use the VM as both a build and testing environment (as is recommended).
+
+> ⚠️ All assessed work for SCC365 will be carried out on MyLab. If for any reason you do not complete any assessed work on the MyLab platform, test any work on MyLab prior to submission as you can not be marked on any non-MyLab VM.
+
+---
+
+## Software
+
+The VM contains software that is typically incompatible with non-Linux systems, and is somewhat inconvenient to install even on Linux systems. This is why the VM is expected to be used for all SCC365 activities, including the tutorials.
+
+Some of the software components installed in the VM are as follows:
+ - Mininet
+ - Wireshark
+ - Open vSwitch
 
 ## Using the VM
 
-If you are an active Lancaster University student and are enrolled in the SCC365 module, you can access the VM via the VMWare Horizon MyLab found [here](https://mylab.lancs.ac.uk).
+To use the materials in this repository to build a local copy of the VM you must have the following components installed:
 
-Otherwise, this VM can easily be created using Virtual Box and Vagrant. Simply navigate to the root directory of this repository and run:
+ - Git
+ - Virtual Box
+ - Vagrant
 
-```
-vagrant up
-```
+With these installed, clone this repository to your device then use vagrant to build and start the VM:
 
----
+1. `git clone https://github.com/scc365/virtual-machine scc365vm`
+2. `cd scc365vm`
+3. `vargrant up`
 
+To login to the VM, use the following credentials:
  - **Username**: `vagrant`
  - **Password**: `vagrant`
----
-
-## Updating the VM
-
-If you are currently participating in SCC365 @ Lancaster University, you can force the VM to update minor changes using the command "`updater`" as the `vagrant` user in the VM.
-
-## Marking Sessions
-
-In the marking sessions your code will be tested on a `mylab` instance of the Virtual Machine. Running it locally or using Docker should be suitable for development, but be sure to test your work on `mylab` before submission. 
-
-> 🚫 Using "it worked on [a non-`mylab` platform]" won't be a valid excuse
