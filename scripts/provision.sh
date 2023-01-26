@@ -108,4 +108,4 @@ pull_images
 install_mininet
 install_ryu
 install_updater
-#add_tutorials
+add_tutorials
