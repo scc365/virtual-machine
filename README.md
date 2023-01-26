@@ -40,3 +40,14 @@ With these installed, clone this repository to your device then use vagrant to b
 To login to the VM, use the following credentials:
  - **Username**: `vagrant`
  - **Password**: `vagrant`
+
+---
+
+## Docker 🐳
+
+For the most part, Docker can be used to run the main software. You can find relevant base images in the following repositories:
+
+- https://github.com/scc365/mininet-base-image
+- https://github.com/scc365/ryu-base-image
+
+> ⚠️ As Mininet can require access to the host features, Mininet containers should be run as privileged. Various issues may be encountered when using Docker for Windows (including WSL 1 & 2).
