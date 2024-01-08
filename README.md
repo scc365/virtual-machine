@@ -23,23 +23,18 @@ Some of the software components installed in the VM are as follows:
  - Wireshark
  - Open vSwitch
 
-## Using the VM
+## Making a VM
 
-To use the materials in this repository to build a local copy of the VM you must have the following components installed:
+If you are not a Lancaster University student and do not have access to the
+MyLab system, you can create your own Linux-based VM to complete the public
+tutorials easily. Simply run the script found in this repository in a minimal
+Ubuntu VM that you are not using for anything else. The command to execute the
+script should be like so:
 
- - Git
- - Virtual Box
- - Vagrant
-
-With these installed, clone this repository to your device then use vagrant to build and start the VM:
-
-1. `git clone https://github.com/scc365/virtual-machine scc365vm`
-2. `cd scc365vm`
-3. `vargrant up`
-
-To login to the VM, use the following credentials:
- - **Username**: `vagrant`
- - **Password**: `vagrant`
+```bash
+chmod +x ./provision.sh
+./provision.sh -r "${HOME}/.bashrc"
+```
 
 ---
 
