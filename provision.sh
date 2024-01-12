@@ -25,7 +25,6 @@ function install_deps() {
     software-properties-common
     add-apt-repository -y ppa:deadsnakes/ppa
     apt-get update
-    apt-get upgrade -yq
     apt-get install -yqq \
         apt-transport-https \
         ca-certificates \
@@ -44,7 +43,7 @@ function install_deps() {
         net-tools \
         openvswitch-common \
         python3.9-dev \
-        python3-pip \
+        python3.9-distutils \
         tmux \
         traceroute \
         tshark \
@@ -53,6 +52,11 @@ function install_deps() {
         x11-apps \
         xauth \
         zlib1g-dev
+
+    curl -o install_pip.py https://bootstrap.pypa.io/get-pip.py
+    python3.9 install_pip.py
+    rm install_pip.py
+    python3.9 -m pip install setuptools==59.5.0
 }
 
 function install_docker() {
@@ -73,16 +77,16 @@ function install_mininet() {
         git clone $MININET_REPO -b $MININET_BRANCH ./mininet
         cd mininet
         sed -i 's/git:/https:/g' ./util/install.sh
-        PYTHON=python3 sh -c "./util/install.sh -fnv"
+        PYTHON=python3.9 sh -c "./util/install.sh -fnv"
     fi
 }
 
 function install_ryu() {
     if ! which ryu-manager; then
-        pip install eventlet==0.30.2
-        pip install ryu==$RYU_VERSION
+        python3.9 -m pip install eventlet==0.30.2
+        python3.9 -m pip install ryu==$RYU_VERSION
         curl https://raw.githubusercontent.com/scc365/ryu-base-image/main/requirements.txt -o ./requirements.txt
-        pip install -r ./requirements.txt
+        python3.9 -m pip install -r ./requirements.txt
     fi
 }
 
