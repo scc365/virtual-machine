@@ -22,6 +22,11 @@ function install_deps() {
     apt-get update
     apt-get upgrade -yq
     apt-get install -yqq \
+    software-properties-common
+    add-apt-repository -y ppa:deadsnakes/ppa
+    apt-get update
+    apt-get upgrade -yq
+    apt-get install -yqq \
         apt-transport-https \
         ca-certificates \
         curl \
@@ -38,9 +43,8 @@ function install_deps() {
         nano \
         net-tools \
         openvswitch-common \
-        python3-dev \
+        python3.9-dev \
         python3-pip \
-        software-properties-common \
         tmux \
         traceroute \
         tshark \
