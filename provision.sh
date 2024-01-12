@@ -111,9 +111,10 @@ main() {
 
     install_deps
     set_bashrc_message "$bashrc"
-    install_docker
     install_mininet
     install_ryu
+    install_docker
+
 }
 
 main "$@"
