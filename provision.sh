@@ -53,6 +53,7 @@ function install_deps() {
         xauth \
         zlib1g-dev
 
+    ln -sf /usr/bin/python3.9 /usr/bin/python3
     curl -o install_pip.py https://bootstrap.pypa.io/get-pip.py
     python3.9 install_pip.py
     rm install_pip.py
