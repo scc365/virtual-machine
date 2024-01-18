@@ -86,6 +86,7 @@ function install_ryu() {
     if ! which ryu-manager; then
         python3.9 -m pip install eventlet==0.30.2
         python3.9 -m pip install ryu==$RYU_VERSION
+        python3.9 -m pip install Flask
         curl https://raw.githubusercontent.com/scc365/ryu-base-image/main/requirements.txt -o ./requirements.txt
         python3.9 -m pip install -r ./requirements.txt
     fi
