@@ -14,6 +14,7 @@ MN_IMAGE="ghcr.io/scc365/mn:latest"
 PTCP_IMAGE="ghcr.io/scc365/ptcp:latest"
 RYU_IMAGE="ghcr.io/scc365/ryu:latest"
 ME_IMAGE="ghcr.io/scc365/me:latest"
+VENV_PATH="/usr/local/lib/python-venv/scc365"
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -44,6 +45,7 @@ function install_deps() {
         openvswitch-common \
         python3.9-dev \
         python3.9-distutils \
+        python3.9-venv \
         tmux \
         traceroute \
         tshark \
@@ -63,12 +65,13 @@ function install_deps() {
 function install_docker() {
     if ! which docker; then
         curl -fsSL https://get.docker.com | sh
-        docker pull $MININET_IMAGE
-        docker pull $MN_IMAGE
-        docker pull $RYU_IMAGE
-        docker pull $ME_IMAGE
-        docker pull $PTCP_IMAGE
     fi
+    # Pull images even if docker is already present
+    docker pull $MININET_IMAGE
+    docker pull $MN_IMAGE
+    docker pull $RYU_IMAGE
+    docker pull $ME_IMAGE
+    docker pull $PTCP_IMAGE
 }
 
 function install_mininet() {
@@ -83,13 +86,21 @@ function install_mininet() {
 }
 
 function install_ryu() {
-    if ! which ryu-manager; then
-        python3.9 -m pip install eventlet==0.30.2
-        python3.9 -m pip install ryu==$RYU_VERSION
-        python3.9 -m pip install Flask
+    # ryu needs python3.9 which is no longer the default, so install into a venv.
+    # Check venv path rather than `which ryu-manager` because default install of mininet can install ryu
+    if [[ ! -f "${VENV_PATH}/bin/ryu-manager" ]]; then
+        mkdir -p "${VENV_PATH}"
+        python3.9 -m venv "${VENV_PATH}"
+        source "${VENV_PATH}/bin/activate"
+        # Specify later version of eventlet
+        pip install eventlet==0.30.2
+        pip install ryu==$RYU_VERSION
+        pip install Flask
         curl https://raw.githubusercontent.com/scc365/ryu-base-image/main/requirements.txt -o ./requirements.txt
-        python3.9 -m pip install -r ./requirements.txt
+        pip install -r ./requirements.txt
     fi
+    cp "${VENV_PATH}/bin/ryu" /usr/local/bin/
+    cp "${VENV_PATH}/bin/ryu-manager" /usr/local/bin/
 }
 
 function set_bashrc_message() {
